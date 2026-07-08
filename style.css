@@ -67,6 +67,10 @@ a {
     font-weight: 500;
 }
 
+.menu-toggle {
+    display: none;
+}
+
 .nav-pills {
     position: fixed;
     z-index: 10;
@@ -122,6 +126,10 @@ a {
 
 .button-wide {
     width: min(100%, 600px);
+}
+
+.mobile-menu-cta {
+    display: none;
 }
 
 .hero {
@@ -636,16 +644,100 @@ h2 {
     }
 
     .topbar {
-        height: 96px;
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        width: calc(100% + 32px);
+        max-width: none;
+        height: 104px;
+        margin-inline: -16px;
+        padding: 28px 40px 0;
         align-items: flex-start;
+        border-radius: 0 0 28px 28px;
+        background: var(--white);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .topbar.is-open {
+        border-radius: 0;
+        box-shadow: none;
     }
 
     .brand {
-        font-size: 24px;
+        font-size: 30px;
     }
 
     .nav-pills {
-        display: none;
+        position: fixed;
+        z-index: 15;
+        top: 0;
+        right: 0;
+        left: 0;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0;
+        height: clamp(620px, 72dvh, 720px);
+        padding: 104px 40px 48px;
+        border-radius: 0 0 28px 28px;
+        background: var(--white);
+        box-shadow: 0 12px 22px rgba(0, 0, 0, 0.12);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(-24px);
+        transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
+        white-space: normal;
+    }
+
+    .nav-pills::before {
+        content: "";
+        position: absolute;
+        top: 104px;
+        right: 40px;
+        left: 40px;
+        height: 1px;
+        background: var(--line);
+    }
+
+    .nav-pills.is-open {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+
+    .nav-pills a {
+        display: flex;
+        align-items: center;
+        min-height: 80px;
+        padding: 0;
+        border-bottom: 1px solid var(--line);
+        border-radius: 0;
+        font-size: 18px;
+        line-height: 1.2;
+    }
+
+    .nav-pills a:hover {
+        background: transparent;
+    }
+
+    .nav-pills .mobile-menu-cta {
+        display: inline-flex;
+        align-self: flex-start;
+        gap: 6px;
+        min-height: 48px;
+        margin-top: auto;
+        padding: 14px 22px;
+        border: 0;
+        border-radius: 1000px;
+        background: var(--olive);
+        color: var(--white);
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
+    .nav-pills .mobile-menu-cta:hover {
+        background: var(--olive);
     }
 
     .button {
@@ -654,28 +746,50 @@ h2 {
     }
 
     .topbar .button {
-        width: 42px;
-        min-width: 42px;
+        display: none;
+    }
+
+    .menu-toggle {
+        display: inline-flex;
+        position: relative;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        width: 36px;
+        height: 30px;
+        margin-top: 1px;
         padding: 0;
-        border-radius: 50%;
+        border: 0;
+        background: transparent;
+        color: var(--ink);
+        cursor: pointer;
     }
 
-    .topbar .button span {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        overflow: hidden;
-        clip: rect(0 0 0 0);
-        white-space: nowrap;
+    .menu-toggle span {
+        display: block;
+        width: 36px;
+        height: 4px;
+        border-radius: 999px;
+        background: currentColor;
+        transition: transform 180ms ease, opacity 180ms ease;
+        transform-origin: center;
     }
 
-    .topbar .button img {
-        width: 10px;
-        height: 10px;
+    .menu-toggle[aria-expanded="true"] span:first-child {
+        transform: translateY(9px) rotate(45deg);
+    }
+
+    .menu-toggle[aria-expanded="true"] span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-toggle[aria-expanded="true"] span:last-child {
+        transform: translateY(-9px) rotate(-45deg);
     }
 
     .hero {
         gap: clamp(96px, 18vw, 128px);
+        margin-top: 36px;
     }
 
     .hero h1 {

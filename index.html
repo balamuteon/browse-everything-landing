@@ -19,13 +19,22 @@
                 <span>Learn More</span>
                 <img src="assets/arrow.svg" alt="">
             </a>
+            <button class="menu-toggle" type="button" aria-label="Open menu" aria-controls="section-menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </nav>
 
-        <div class="nav-pills" aria-label="Section navigation">
+        <div class="nav-pills" id="section-menu" aria-label="Section navigation">
             <a href="#benefits">Benefits</a>
             <a href="#specifications">Specifications</a>
             <a href="#how-to">How-to</a>
             <a href="#contact">Contact Us</a>
+            <a class="button button-dark mobile-menu-cta" href="#contact">
+                <span>Learn More</span>
+                <img src="assets/arrow.svg" alt="">
+            </a>
         </div>
 
         <header class="hero shell">
@@ -225,6 +234,31 @@
             </div>
         </footer>
     </div>
+    <script>
+        const menuToggle = document.querySelector(".menu-toggle");
+        const sectionMenu = document.querySelector(".nav-pills");
+        const topbar = document.querySelector(".topbar");
+
+        if (menuToggle && sectionMenu) {
+            const setMenuOpen = (isOpen) => {
+                sectionMenu.classList.toggle("is-open", isOpen);
+                topbar?.classList.toggle("is-open", isOpen);
+                menuToggle.setAttribute("aria-expanded", String(isOpen));
+                menuToggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+            };
+
+            menuToggle.addEventListener("click", () => {
+                const isOpen = !sectionMenu.classList.contains("is-open");
+                setMenuOpen(isOpen);
+            });
+
+            sectionMenu.addEventListener("click", (event) => {
+                if (event.target.closest("a")) {
+                    setMenuOpen(false);
+                }
+            });
+        }
+    </script>
 </body>
 
 </html>
